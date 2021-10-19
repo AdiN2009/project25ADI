@@ -18,59 +18,60 @@ var ground2;
 
 function setup() {
 	createCanvas(1600, 800);
-
-	ground =new Ground(width/2,690,width,20);
-    leftS =new Ground(1400,600,20,120);
-	rightS =new Ground(1200,600,20,120);
-	side1=new Ground(1590,height/2,20,height);
-	side2 =new Ground(10,height/2,20,height);
-	side3=new Ground(width/2,10,width,20);
-  ground2 =new Ground(1300,580,200,20);
-
+  engine = Engine.create();
+	world = engine.world;
 
    var ball_options={
 	   isStatic:false,
-	   restitution:0.1,
+	   restitution:0.3,
 	   friction:0,
-	   density:7
+	   density:1.2
    }
-	engine = Engine.create();
-	world = engine.world;
 
 	//Create the Bodies Here.
-	ball = Matter.Bodies.circle(600, 400, 30, ball_options)
+	ball = Matter.Bodies.circle(310, 100, 20, ball_options)
 	World.add(world,ball);
 
+  side1=new Ground(1590,height/2,20,height);
+	side2 =new Ground(10,height/2,20,height);
+	side3=new Ground(width/2,10,width,20);
+  ground2 =new Ground(1300,770,220,20);
 
-    rectMode(CENTER);
+  ground =new Ground(width/2,790,width,20);
+  leftS =new Ground(1400,700,20,120);
+	rightS =new Ground(1200,700,20,120);
+
+
+  rectMode(CENTER);
   ellipseMode(RADIUS);
-  Engine.run(engine);
+  
 }
 
 
 function draw() {
-
-    
   background(0);
-  if (keyCode === UP_ARROW){
-	keyPressed()
-}
+
+  Engine.update(engine);
 
   ellipse(ball.position.x,ball.position.y,20,20)
+
+
   ground.display();
-  ground2.display();
+
   leftS.display();
   rightS.display();
 
    side1.display();
    side2.display();
    side3.display();
-  drawSprites();
-  keyPressed();
-}
 
-function keyPressed(){
-	Matter.Body.applyForce(ball,{x:0,y:0},{x:13,y:-14.5})
   }
+ 
 
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
 
+  Matter.Body.applyForce(ball,ball.position,{x:170,y:-170});
+  
+  }
+}
